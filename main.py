@@ -44,10 +44,10 @@ IMAGE_WIDTH = 640
 IMAGE_HEIGHT = 480
 
 # images to render
-NUM_IMAGES = 25
+NUM_IMAGES = 53
 
 # for production necessary minimum 512
-NUM_SAMPLES = 12
+NUM_SAMPLES = 3
 
 if DRAW_BBOXES:
     # it's necessary to run another script to install cv2 to blender interpretator 
@@ -83,8 +83,13 @@ with open(geometry_file_path, "w") as file:
     
         # change walls' color
         c.hsv = h, s, v
-        bpy.data.objects['стена'].color = c.r, c.g, c.b, 1.0 
-        
+        bpy.data.objects['стена'].color = c.r, c.g, c.b, 1.0
+         
+        # change color of baths' floor
+        bpy.data.objects['стена'].active_material.node_tree.nodes["Hue Saturation Value"].inputs[0].default_value = uniform(0.45, 0.53)
+        bpy.data.objects['стена'].active_material.node_tree.nodes["Hue Saturation Value"].inputs[1].default_value = uniform(1.1, 2)
+        bpy.data.objects['стена'].active_material.node_tree.nodes["Hue Saturation Value"].inputs[2].default_value = uniform(0.9, 2)
+
         for light in list(bpy.data.collections['lights'].objects):
             # relocate and change power of light
             light.location.x = uniform(low_x, high_x)
