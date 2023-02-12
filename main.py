@@ -14,7 +14,7 @@ from mathutils import Color
 if os.name == 'posix':
     base_dir = '/home/alex/python_projects/blender_datasampling'
 elif os.name == 'nt':
-    base_dir = 'e:\\python_projects\\renderering_result'
+    base_dir = 'e:\\blender_data_sampling'
 
 sys.path.append(base_dir)
 from setup_camera import rotate_camera
@@ -29,23 +29,31 @@ colors_list = {(0, 0.8, 0.8, 1): 'cian', (0.8, 0, 0.8, 1): 'purple', (0.8, 0.8, 
 shapes = {'round': 'circle', 'round2': 'circle', 'sqr': 'square', 'triu': 'triangle',
         'circle1': 'hoop', 'circle2': 'hoop', 'gate': 'gate', 'TARGET': 'Target circle'}
 
+if not os.path.isdir('results'):
+    os.mkdir('results')
+
 # angles of camera rotation
 LEFT_ANGLE = 0
 RIGHT_ANGLE = 360
 
+# see readme
 DRAW_BBOXES = True
+
 RENDERING = True
 IMAGE_WIDTH = 640
 IMAGE_HEIGHT = 480
-# necassary minimum 512
+
+# images to render
+NUM_IMAGES = 25
+
+# for production necessary minimum 512
 NUM_SAMPLES = 12
 
 if DRAW_BBOXES:
     # it's necessary to run another script to install cv2 to blender interpretator 
     import cv2
     
-
-geometry_file_path = os.path.join(base_dir, "geometry.json")
+geometry_file_path = os.path.join(base_dir, "bboxes.json")
 with open(geometry_file_path, "w") as file:
     
     objects_to_move = set(list(bpy.data.collections['move_and_change_color'].objects) + (list(bpy.data.collections['only_move'].objects)))
@@ -54,7 +62,7 @@ with open(geometry_file_path, "w") as file:
     # save initial power of light
     medium_light = 100000
     
-    # finding biggest dimension to correctly relocate objects
+    # finding the biggest dimension to correctly relocate objects
     mx_dim = 0
     for object in objects_to_move:
         
@@ -62,11 +70,12 @@ with open(geometry_file_path, "w") as file:
             mx_dim = object.dimensions.x
             
         if object.dimensions.y > mx_dim:
-             mx_dim = object.dimensions.y 
-    # object to hsv -> rgb transformation
+             mx_dim = object.dimensions.y
+              
+    # object for hsv -> rgb transformation
     c = Color()
     
-    for i in range(10, 40):
+    for i in range(NUM_IMAGES):
     
         h = uniform(0.5, 0.6)
         s = uniform(0.6, 0.9)
@@ -120,10 +129,13 @@ with open(geometry_file_path, "w") as file:
             objects_in_camera = objects_to_move.intersection(select_objects_in_camera())
             valid_objects = []
             
+            # check how much objects in camera
             if len(objects_in_camera) < 3:
                 continue
             
+            # checking invalid bboxes
             for object in objects_in_camera:
+                
                 # get bbox of object
                 b = camera_view_bounds_2d(bpy.context.scene, bpy.context.scene.camera, bpy.data.objects[object.name])
             
@@ -139,7 +151,7 @@ with open(geometry_file_path, "w") as file:
                     valid_objects.append(b)     
 
             
-            
+            # saving and rendering
             if len(valid_objects) >= 2:
                 
                 f = "image" + str(i) + ".jpg"
@@ -177,7 +189,7 @@ with open(geometry_file_path, "w") as file:
                 break
             
         if RENDERING:        
-            path = os.path.join(base_dir, f)
+            path = os.path.join(base_dir, 'results', f)
             bpy.context.scene.render.filepath = path
             bpy.context.scene.render.resolution_x = IMAGE_WIDTH
             bpy.context.scene.render.resolution_y = IMAGE_HEIGHT
@@ -190,7 +202,7 @@ with open(geometry_file_path, "w") as file:
                     cv2.rectangle(im, (box.x, box.y), (box.x + box.width, box.y + box.height), (255, 0, 0), 4)
                     cv2.putText(im, box.name, (box.x, box.y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
                 os.remove(path)
-                path = os.path.join(base_dir, f'img_bbox_{i}.jpg')
+                path = os.path.join(base_dir, 'results', f'img_bbox_{i}.jpg')
                 cv2.imwrite(path, im)
                         
         # print(objects_to_move.intersection(objects_in_camera))
