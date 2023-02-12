@@ -1,0 +1,811 @@
+{
+    "file_name": "image10.jpg",
+    "circle_0": {
+        "shape": "circle",
+        "color": "yellow",
+        "bbox": [
+            232,
+            453,
+            170,
+            27
+        ]
+    },
+    "circle_1": {
+        "shape": "circle",
+        "color": "green",
+        "bbox": [
+            29,
+            380,
+            117,
+            22
+        ]
+    }
+}{
+    "file_name": "image11.jpg",
+    "triangle_0": {
+        "shape": "triangle",
+        "color": "purple",
+        "bbox": [
+            281,
+            317,
+            99,
+            11
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            518,
+            227,
+            34,
+            55
+        ]
+    },
+    "hoop_2": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            566,
+            216,
+            74,
+            130
+        ]
+    }
+}{
+    "file_name": "image12.jpg",
+    "hoop_0": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            479,
+            206,
+            55,
+            63
+        ]
+    },
+    "circle_1": {
+        "shape": "circle",
+        "color": "green",
+        "bbox": [
+            20,
+            311,
+            136,
+            15
+        ]
+    }
+}{
+    "file_name": "image13.jpg",
+    "hoop_0": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            358,
+            260,
+            70,
+            80
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            593,
+            234,
+            35,
+            46
+        ]
+    }
+}{
+    "file_name": "image14.jpg",
+    "triangle_0": {
+        "shape": "triangle",
+        "color": "green",
+        "bbox": [
+            202,
+            340,
+            83,
+            11
+        ]
+    },
+    "circle_1": {
+        "shape": "circle",
+        "color": "yellow",
+        "bbox": [
+            561,
+            382,
+            79,
+            23
+        ]
+    }
+}{
+    "file_name": "image15.jpg",
+    "circle_0": {
+        "shape": "circle",
+        "color": "cian",
+        "bbox": [
+            104,
+            336,
+            223,
+            33
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            167,
+            185,
+            66,
+            76
+        ]
+    }
+}{
+    "file_name": "image16.jpg",
+    "hoop_0": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            73,
+            196,
+            52,
+            69
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            387,
+            201,
+            42,
+            43
+        ]
+    }
+}{
+    "file_name": "image17.jpg",
+    "square_0": {
+        "shape": "square",
+        "color": "yellow",
+        "bbox": [
+            470,
+            408,
+            170,
+            70
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            215,
+            247,
+            120,
+            131
+        ]
+    },
+    "hoop_2": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            449,
+            225,
+            121,
+            127
+        ]
+    }
+}{
+    "file_name": "image18.jpg",
+    "triangle_0": {
+        "shape": "triangle",
+        "color": "cian",
+        "bbox": [
+            0,
+            456,
+            131,
+            24
+        ]
+    },
+    "circle_1": {
+        "shape": "circle",
+        "color": "blue",
+        "bbox": [
+            252,
+            389,
+            111,
+            23
+        ]
+    },
+    "gate_2": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            100,
+            301,
+            87,
+            48
+        ]
+    }
+}{
+    "file_name": "image19.jpg",
+    "circle_0": {
+        "shape": "circle",
+        "color": "purple",
+        "bbox": [
+            182,
+            365,
+            144,
+            26
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            206,
+            230,
+            62,
+            75
+        ]
+    }
+}{
+    "file_name": "image20.jpg",
+    "hoop_0": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            193,
+            205,
+            34,
+            41
+        ]
+    },
+    "gate_1": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            403,
+            222,
+            32,
+            14
+        ]
+    },
+    "Target circle_2": {
+        "shape": "Target circle",
+        "color": "red",
+        "bbox": [
+            249,
+            357,
+            269,
+            48
+        ]
+    }
+}{
+    "file_name": "image21.jpg",
+    "circle_0": {
+        "shape": "circle",
+        "color": "blue",
+        "bbox": [
+            566,
+            403,
+            74,
+            24
+        ]
+    },
+    "gate_1": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            72,
+            409,
+            148,
+            71
+        ]
+    }
+}{
+    "file_name": "image22.jpg",
+    "square_0": {
+        "shape": "square",
+        "color": "purple",
+        "bbox": [
+            0,
+            322,
+            51,
+            24
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            268,
+            198,
+            107,
+            130
+        ]
+    }
+}{
+    "file_name": "image23.jpg",
+    "circle_0": {
+        "shape": "circle",
+        "color": "blue",
+        "bbox": [
+            0,
+            437,
+            165,
+            43
+        ]
+    },
+    "gate_1": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            157,
+            262,
+            37,
+            32
+        ]
+    },
+    "hoop_2": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            396,
+            232,
+            44,
+            67
+        ]
+    },
+    "Target circle_3": {
+        "shape": "Target circle",
+        "color": "red",
+        "bbox": [
+            223,
+            357,
+            109,
+            18
+        ]
+    }
+}{
+    "file_name": "image24.jpg",
+    "circle_0": {
+        "shape": "circle",
+        "color": "blue",
+        "bbox": [
+            105,
+            293,
+            192,
+            18
+        ]
+    },
+    "gate_1": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            31,
+            214,
+            81,
+            36
+        ]
+    }
+}{
+    "file_name": "image25.jpg",
+    "hoop_0": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            601,
+            242,
+            30,
+            47
+        ]
+    },
+    "gate_1": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            221,
+            258,
+            38,
+            19
+        ]
+    },
+    "Target circle_2": {
+        "shape": "Target circle",
+        "color": "red",
+        "bbox": [
+            458,
+            351,
+            84,
+            13
+        ]
+    }
+}{
+    "file_name": "image26.jpg",
+    "square_0": {
+        "shape": "square",
+        "color": "yellow",
+        "bbox": [
+            141,
+            354,
+            131,
+            20
+        ]
+    },
+    "Target circle_1": {
+        "shape": "Target circle",
+        "color": "red",
+        "bbox": [
+            195,
+            440,
+            151,
+            40
+        ]
+    },
+    "gate_2": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            271,
+            274,
+            57,
+            30
+        ]
+    }
+}{
+    "file_name": "image27.jpg",
+    "hoop_0": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            260,
+            236,
+            51,
+            59
+        ]
+    },
+    "gate_1": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            581,
+            266,
+            59,
+            31
+        ]
+    }
+}{
+    "file_name": "image28.jpg",
+    "triangle_0": {
+        "shape": "triangle",
+        "color": "purple",
+        "bbox": [
+            509,
+            398,
+            108,
+            22
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            0,
+            267,
+            50,
+            66
+        ]
+    },
+    "circle_2": {
+        "shape": "circle",
+        "color": "blue",
+        "bbox": [
+            89,
+            338,
+            74,
+            10
+        ]
+    },
+    "hoop_3": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            0,
+            277,
+            59,
+            118
+        ]
+    }
+}{
+    "file_name": "image29.jpg",
+    "hoop_0": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            121,
+            217,
+            36,
+            42
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            0,
+            166,
+            76,
+            270
+        ]
+    },
+    "circle_2": {
+        "shape": "circle",
+        "color": "yellow",
+        "bbox": [
+            260,
+            321,
+            122,
+            15
+        ]
+    }
+}{
+    "file_name": "image30.jpg",
+    "hoop_0": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            394,
+            182,
+            85,
+            117
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            0,
+            116,
+            94,
+            254
+        ]
+    }
+}{
+    "file_name": "image31.jpg",
+    "gate_0": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            114,
+            260,
+            56,
+            27
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            288,
+            230,
+            40,
+            47
+        ]
+    }
+}{
+    "file_name": "image32.jpg",
+    "square_0": {
+        "shape": "square",
+        "color": "blue",
+        "bbox": [
+            200,
+            324,
+            88,
+            11
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            517,
+            265,
+            33,
+            54
+        ]
+    },
+    "circle_2": {
+        "shape": "circle",
+        "color": "green",
+        "bbox": [
+            380,
+            346,
+            72,
+            11
+        ]
+    },
+    "Target circle_3": {
+        "shape": "Target circle",
+        "color": "red",
+        "bbox": [
+            216,
+            378,
+            91,
+            17
+        ]
+    }
+}{
+    "file_name": "image33.jpg",
+    "hoop_0": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            535,
+            394,
+            105,
+            86
+        ]
+    },
+    "circle_1": {
+        "shape": "circle",
+        "color": "green",
+        "bbox": [
+            268,
+            389,
+            121,
+            25
+        ]
+    },
+    "hoop_2": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            546,
+            247,
+            81,
+            84
+        ]
+    },
+    "gate_3": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            147,
+            278,
+            55,
+            37
+        ]
+    }
+}{
+    "file_name": "image34.jpg",
+    "hoop_0": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            375,
+            247,
+            35,
+            42
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            32,
+            256,
+            89,
+            91
+        ]
+    }
+}{
+    "file_name": "image35.jpg",
+    "hoop_0": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            244,
+            260,
+            49,
+            79
+        ]
+    },
+    "gate_1": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            172,
+            290,
+            69,
+            33
+        ]
+    }
+}{
+    "file_name": "image36.jpg",
+    "circle_0": {
+        "shape": "circle",
+        "color": "green",
+        "bbox": [
+            317,
+            344,
+            110,
+            16
+        ]
+    },
+    "gate_1": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            610,
+            262,
+            30,
+            38
+        ]
+    }
+}{
+    "file_name": "image37.jpg",
+    "circle_0": {
+        "shape": "circle",
+        "color": "purple",
+        "bbox": [
+            464,
+            300,
+            144,
+            14
+        ]
+    },
+    "hoop_1": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            373,
+            186,
+            75,
+            77
+        ]
+    }
+}{
+    "file_name": "image38.jpg",
+    "hoop_0": {
+        "shape": "hoop",
+        "color": "black",
+        "bbox": [
+            277,
+            204,
+            34,
+            53
+        ]
+    },
+    "gate_1": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            17,
+            237,
+            78,
+            38
+        ]
+    }
+}{
+    "file_name": "image39.jpg",
+    "square_0": {
+        "shape": "square",
+        "color": "blue",
+        "bbox": [
+            0,
+            342,
+            85,
+            10
+        ]
+    },
+    "gate_1": {
+        "shape": "gate",
+        "color": "black",
+        "bbox": [
+            132,
+            286,
+            30,
+            31
+        ]
+    }
+}
