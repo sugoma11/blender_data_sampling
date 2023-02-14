@@ -17,6 +17,7 @@ if os.name == 'posix':
 elif os.name == 'nt':
     base_dir = 'e:\\blender_data_sampling'
 
+os.chdir(base_dir)
 sys.path.append(base_dir)
 from setup_camera import rotate_camera
 from bboxes import camera_view_bounds_2d
