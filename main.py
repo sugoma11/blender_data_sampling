@@ -9,6 +9,7 @@ import bpy
 import numpy as np
 from json import dumps
 from mathutils import Color
+from pathlib import Path
 
 # insert your's pathes
 if os.name == 'posix':
@@ -32,6 +33,12 @@ shapes = {'round': 'circle', 'round2': 'circle', 'sqr': 'square', 'triu': 'trian
 if not os.path.isdir('results'):
     os.mkdir('results')
 
+if len(list(Path('./results').glob('*.jpg'))) == 0:
+    num = 0
+else:
+    last_im = (sorted(Path('./results').glob('*.jpg'))[-1]).name
+    num = int(last_im.split('.')[0].split('_')[-1]) + 1
+
 # angles of camera rotation
 LEFT_ANGLE = 0
 RIGHT_ANGLE = 360
@@ -44,10 +51,10 @@ IMAGE_WIDTH = 640
 IMAGE_HEIGHT = 480
 
 # images to render
-NUM_IMAGES = 53
+NUM_IMAGES = 10
 
 # for production necessary minimum 512
-NUM_SAMPLES = 3
+NUM_SAMPLES = 2
 
 if DRAW_BBOXES:
     # it's necessary to run another script to install cv2 to blender interpretator 
@@ -75,7 +82,7 @@ with open(geometry_file_path, "w") as file:
     # object for hsv -> rgb transformation
     c = Color()
     
-    for i in range(NUM_IMAGES):
+    for i in range(num, num + NUM_IMAGES):
     
         h = uniform(0.5, 0.6)
         s = uniform(0.6, 0.9)
@@ -94,7 +101,7 @@ with open(geometry_file_path, "w") as file:
             # relocate and change power of light
             light.location.x = uniform(low_x, high_x)
             light.location.y = uniform(low_y, high_y)
-            light.data.energy = uniform(medium_light - 0.75 * medium_light, medium_light + 0.75 * medium_light)
+            light.data.energy = uniform(medium_light - 0.25 * medium_light, medium_light + 0.75 * medium_light)
             light.rotation_euler[2] = randint(0, 360) / 180 * math.pi
             
         
@@ -145,7 +152,7 @@ with open(geometry_file_path, "w") as file:
                 b = camera_view_bounds_2d(bpy.context.scene, bpy.context.scene.camera, bpy.data.objects[object.name])
             
                 # check size of bbox; in far figures may looks like a string
-                if b.width < 30 or b.height < 10:
+                if b.width < 30 or b.height < 5:
                     continue
                 
                 # check distance between camera and object
@@ -204,11 +211,12 @@ with open(geometry_file_path, "w") as file:
             if DRAW_BBOXES:
                 im = cv2.imread(path)
                 for box in valid_objects:
-                    cv2.rectangle(im, (box.x, box.y), (box.x + box.width, box.y + box.height), (255, 0, 0), 4)
-                    cv2.putText(im, box.name, (box.x, box.y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
+                    cv2.rectangle(im, (box.x, box.y), (box.x + box.width, box.y + box.height), (255, 0, 0), 1)
+                    cv2.putText(im, box.name, (box.x, box.y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 1)
+                    cv2.putText(im, f'{str(box.width)}, {str(box.height)}', (box.x, box.y - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 1)
                 os.remove(path)
                 path = os.path.join(base_dir, 'results', f'img_bbox_{i}.jpg')
                 cv2.imwrite(path, im)
                         
         # print(objects_to_move.intersection(objects_in_camera))
-                
+        #np.sqrt((bpy.data.objects['gate'].location.x - bpy.data.objects['Camera'].location.x) ** 2 + (bpy.data.objects['gate'].location.y - bpy.data.objects['Camera'].location.y) ** 2 + (bpy.data.objects['gate'].location.z - bpy.data.objects['Camera'].location.z) ** 2)

@@ -1,6 +1,7 @@
 # Data sampling with bpy
 
-To draw bboxes necessary install cv2 to blender python interpretator.
+To draw bboxes necessary install __cv2__ to blender python interpretator.  
+For work with JSON also necessary install  __pydantic__.
 
 For windows run:
 
@@ -22,7 +23,15 @@ subprocess.call([python_exe, py_lib, "install", "mediapipe"])
 For Linux:
 
 ```sh
-cd path_to_blender]/3.4/python/bin
+cd path_to_blender/3.4/python/bin
 ./python3.10 -m ensurepip
 ./python3.10 -m pip install opencv-python
+```
+
+Analogically via shell for Windows:
+
+```sh
+cd path_to_blender\3.4\python\bin
+.\python.exe -m ensurepip
+.\python.exe -m pip install pydantic
 ```
