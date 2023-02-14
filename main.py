@@ -13,7 +13,7 @@ from pathlib import Path
 
 # insert your's pathes
 if os.name == 'posix':
-    base_dir = '/home/alex/python_projects/blender_datasampling'
+    base_dir = '/home/alex/python_projects/blender_data_sampling'
 elif os.name == 'nt':
     base_dir = 'e:\\blender_data_sampling'
 
@@ -23,6 +23,7 @@ from bboxes import camera_view_bounds_2d
 from get_edges import xxyyzz_edges
 from objects_in_view import select_objects_in_camera
 from make_grid import make_grid
+from utils import SampleData
 
 colors_list = {(0, 0.8, 0.8, 1): 'cian', (0.8, 0, 0.8, 1): 'purple', (0.8, 0.8, 0, 1): 'yellow', (0.1, 0, 0.8, 1): 'blue',
                (0, 0.8, 0, 1): 'green'}
@@ -35,9 +36,11 @@ if not os.path.isdir('results'):
 
 if len(list(Path('./results').glob('*.jpg'))) == 0:
     num = 0
+    
 else:
-    last_im = (sorted(Path('./results').glob('*.jpg'))[-1]).name
+    last_im = (sorted(Path('./results').glob('*.jpg'), key=os.path.getmtime)[-1]).name
     num = int(last_im.split('.')[0].split('_')[-1]) + 1
+    
 
 # angles of camera rotation
 LEFT_ANGLE = 0
@@ -51,7 +54,7 @@ IMAGE_WIDTH = 640
 IMAGE_HEIGHT = 480
 
 # images to render
-NUM_IMAGES = 10
+NUM_IMAGES = 5
 
 # for production necessary minimum 512
 NUM_SAMPLES = 2
@@ -62,7 +65,7 @@ if DRAW_BBOXES:
     
 geometry_file_path = os.path.join(base_dir, "bboxes.json")
 with open(geometry_file_path, "w") as file:
-    
+    ls_im_bboxes = []
     objects_to_move = set(list(bpy.data.collections['move_and_change_color'].objects) + (list(bpy.data.collections['only_move'].objects)))
     # get low and high xxyy coordinates of bath
     low_x, low_y, low_z, high_x, high_y, high_z = xxyyzz_edges(bpy.data.objects['стена'])
@@ -162,44 +165,27 @@ with open(geometry_file_path, "w") as file:
                 else:
                     valid_objects.append(b)     
 
-            
             # saving and rendering
             if len(valid_objects) >= 2:
-                
+                list_bboxes = []
                 f = "image" + str(i) + ".jpg"
-                
-                outer_dct = {'file_name': f}
+                for obj in valid_objects:
+                    if obj.color == (0.8, 0.0, 0.0, 1.0):
+                        list_bboxes.append({'x': obj.x, 'y': obj.y, 'width': obj.width, 'height': obj.height,
+                                            'color': 'red', 'type': shapes[obj.name]})
 
-                for l, box in enumerate(valid_objects):
-                    object_name = shapes[box.name] + '_' + str(l)
-                    temp_dct = {}
-                    temp_dct['shape'] = shapes[box.name]
-                    if box.color == (0.0, 0.0, 0.0, 1.0):
-                        temp_dct['color'] = 'black'
-                    elif box.color == (0.8, 0, 0, 1):
-                        temp_dct['color'] = 'red'
+                    elif obj.color == (0.0, 0.0, 0.0, 1.0):
+                        list_bboxes.append({'x': obj.x, 'y': obj.y, 'width': obj.width, 'height': obj.height,
+                                            'color': 'black', 'type': shapes[obj.name]})
+
                     else:
-                        temp_dct['color'] = colors_list[box.color]
-                    temp_dct["bbox"] = (box.x, box.y, box.width, box.height)
-                    outer_dct[object_name] = temp_dct
-                    print(outer_dct)
+                        list_bboxes.append({'x': obj.x, 'y': obj.y, 'width': obj.width, 'height': obj.height,
+                                            'color': colors_list[obj.color], 'type': shapes[obj.name]})
 
-                file.write(dumps(outer_dct, indent=4))
-                
-                #print()              
-                
-                #print(f'valid_objects {valid_objects}')
-            
-                #print('____________________________')
-            
-                #print(f'in camera {objects_in_camera}')
-                
-                #print()
-                
-                #bpy.ops.object.select_all(action='SELECT')
-                
+                im_bbox = {'image_name': f, 'bboxes': list_bboxes}
+                ls_im_bboxes.append(im_bbox)
                 break
-            
+
         if RENDERING:        
             path = os.path.join(base_dir, 'results', f)
             bpy.context.scene.render.filepath = path
@@ -217,6 +203,8 @@ with open(geometry_file_path, "w") as file:
                 os.remove(path)
                 path = os.path.join(base_dir, 'results', f'img_bbox_{i}.jpg')
                 cv2.imwrite(path, im)
-                        
-        # print(objects_to_move.intersection(objects_in_camera))
-        #np.sqrt((bpy.data.objects['gate'].location.x - bpy.data.objects['Camera'].location.x) ** 2 + (bpy.data.objects['gate'].location.y - bpy.data.objects['Camera'].location.y) ** 2 + (bpy.data.objects['gate'].location.z - bpy.data.objects['Camera'].location.z) ** 2)
+                
+    m = SampleData(ImageBboxes = ls_im_bboxes)
+    st = m.json()
+    file.write(st)
+    

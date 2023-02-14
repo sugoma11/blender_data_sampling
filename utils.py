@@ -1,8 +1,20 @@
-class SampleData():
-
-    def __init__(self):
-        self.images_bboxes = []
+from pydantic import BaseModel
 
 
-    def add(self, image_bbox):
-        self.images_bboxes.append(image_bbox)
+class Bbox(BaseModel):
+
+    x: int
+    y: int
+    width: int
+    height: int
+    color: str
+    type: str
+
+
+class ImageBboxes(BaseModel):
+    image_name: str
+    bboxes: list[Bbox]
+
+
+class SampleData(BaseModel):
+    ImageBboxes: list[ImageBboxes]
