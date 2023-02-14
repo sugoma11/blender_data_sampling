@@ -205,6 +205,6 @@ with open(geometry_file_path, "w") as file:
                 cv2.imwrite(path, im)
                 
     m = SampleData(ImageBboxes = ls_im_bboxes)
-    st = m.json()
+    st = m.json(indent=2)
     file.write(st)
     
