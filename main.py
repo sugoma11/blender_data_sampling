@@ -7,7 +7,7 @@ import math
 from random import random, randint, choice, choices, uniform
 import bpy
 import numpy as np
-from json import dumps
+from json import dumps, load
 from mathutils import Color
 from pathlib import Path
 
@@ -41,7 +41,6 @@ if len(list(Path('./results').glob('*.jpg'))) == 0:
 else:
     last_im = (sorted(Path('./results').glob('*.jpg'), key=os.path.getmtime)[-1]).name
     num = int(last_im.split('.')[0].split('_')[-1]) + 1
-    
 
 # angles of camera rotation
 LEFT_ANGLE = 0
@@ -65,8 +64,17 @@ if DRAW_BBOXES:
     import cv2
     
 geometry_file_path = os.path.join(base_dir, "bboxes.json")
-with open(geometry_file_path, "w") as file:
-    ls_im_bboxes = []
+with open(geometry_file_path, "r+") as file:
+
+    if num == 0:
+        ls_im_bboxes = []
+        file.close()
+    else:
+        datax = load(file)
+        ls_im_bboxes = SampleData(**datax).ImageBboxes
+        file.close()
+
+with open(geometry_file_path, "r+") as file:
     objects_to_move = set(list(bpy.data.collections['move_and_change_color'].objects) + (list(bpy.data.collections['only_move'].objects)))
     # get low and high xxyy coordinates of bath
     low_x, low_y, low_z, high_x, high_y, high_z = xxyyzz_edges(bpy.data.objects['стена'])
@@ -169,7 +177,7 @@ with open(geometry_file_path, "w") as file:
             # saving and rendering
             if len(valid_objects) >= 2:
                 list_bboxes = []
-                f = "image" + str(i) + ".jpg"
+                f = "image_" + str(i) + ".jpg"
                 for obj in valid_objects:
                     if obj.color == (0.8, 0.0, 0.0, 1.0):
                         list_bboxes.append({'x': obj.x, 'y': obj.y, 'width': obj.width, 'height': obj.height,
@@ -202,10 +210,9 @@ with open(geometry_file_path, "w") as file:
                     cv2.putText(im, box.name, (box.x, box.y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 1)
                     cv2.putText(im, f'{str(box.width)}, {str(box.height)}', (box.x, box.y - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 1)
                 os.remove(path)
-                path = os.path.join(base_dir, 'results', f'img_bbox_{i}.jpg')
+                path = os.path.join(base_dir, 'results', f'image_{i}.jpg')
                 cv2.imwrite(path, im)
                 
     m = SampleData(ImageBboxes = ls_im_bboxes)
     st = m.json(indent=2)
     file.write(st)
-    
