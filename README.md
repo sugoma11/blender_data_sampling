@@ -1,7 +1,8 @@
 # Data sampling with bpy
 
 To draw bboxes necessary install __cv2__ to blender python interpretator.  
-For work with JSON also necessary install  __pydantic__.
+For work with JSON also necessary install  __pydantic__.  
+For define visibility of object necessary install __sklearn__.
 
 For windows run:
 
@@ -18,6 +19,8 @@ py_lib = os.path.join(sys.prefix, 'lib', 'site-packages','pip')
 subprocess.call([python_exe, py_lib, "install", "opencv_python"])
 # install mediapipe
 subprocess.call([python_exe, py_lib, "install", "mediapipe"])
+# install sklearn
+subprocess.call([python_exe, py_lib, "install", "scikit-learn"])
 ```
 
 For Linux:
