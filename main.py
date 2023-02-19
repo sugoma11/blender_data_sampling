@@ -10,7 +10,8 @@ import numpy as np
 from json import dumps, load
 from mathutils import Color
 from pathlib import Path
-
+from pickle import load as pickle_load
+from joblib import load as jb_load
 # insert your's pathes
 if os.name == 'posix':
     base_dir = '/home/alex/python_projects/blender_data_sampling'
@@ -26,6 +27,9 @@ from objects_in_view import select_objects_in_camera
 from make_grid import make_grid
 from utils import SampleData
 
+def l2(obj):
+    return round(np.sqrt((obj.location.x - bpy.data.objects['Camera'].location.x) ** 2 + (obj.location.y - bpy.data.objects['Camera'].location.y) ** 2 + (obj.location.z - bpy.data.objects['Camera'].location.z) ** 2), ndigits=0)
+
 colors_list = {(0, 0.8, 0.8, 1): 'cian', (0.8, 0, 0.8, 1): 'purple', (0.8, 0.8, 0, 1): 'yellow', (0.1, 0, 0.8, 1): 'blue',
                (0, 0.8, 0, 1): 'green'}
 
@@ -34,6 +38,8 @@ shapes = {'round': 'circle', 'round2': 'circle', 'sqr': 'square', 'triu': 'trian
 
 if not os.path.isdir('results'):
     os.mkdir('results')
+
+model = pickle_load(open('svc_mist.sav', 'rb'))
 
 if len(list(Path('./results').glob('*.jpg'))) == 0:
     num = 0
@@ -57,7 +63,11 @@ IMAGE_HEIGHT = 480
 NUM_IMAGES = 5
 
 # for production necessary minimum 512
-NUM_SAMPLES = 2
+NUM_SAMPLES = 100
+
+MIST = False
+
+sc = jb_load('std_scaler.bin')
 
 if DRAW_BBOXES:
     # it's necessary to run another script to install cv2 to blender interpretator 
@@ -80,7 +90,7 @@ with open(geometry_file_path, "r+") as file:
     low_x, low_y, low_z, high_x, high_y, high_z = xxyyzz_edges(bpy.data.objects['стена'])
     # save initial power of light
     medium_light = 100000
-    
+    init_lights = [bpy.data.objects['Источник-область'], bpy.data.objects['Источник-область.001']]
     # finding the biggest dimension to correctly relocate objects
     mx_dim = 0
     for object in objects_to_move:
@@ -109,12 +119,30 @@ with open(geometry_file_path, "r+") as file:
         bpy.data.objects['стена'].active_material.node_tree.nodes["Hue Saturation Value"].inputs[1].default_value = uniform(1.1, 2)
         bpy.data.objects['стена'].active_material.node_tree.nodes["Hue Saturation Value"].inputs[2].default_value = uniform(0.9, 2)
 
-        for light in list(bpy.data.collections['lights'].objects):
-            # relocate and change power of light
-            light.location.x = uniform(low_x, high_x)
-            light.location.y = uniform(low_y, high_y)
-            light.data.energy = uniform(medium_light - 0.25 * medium_light, medium_light + 0.75 * medium_light)
-            light.rotation_euler[2] = randint(0, 360) / 180 * math.pi
+        if MIST:
+
+            density = uniform(0, 0.45)
+            bpy.data.materials["Material.001"].node_tree.nodes["Principled Volume"].inputs[2].default_value = density
+            
+            # water HSV
+            c.hsv = uniform(0.5, 0.6), uniform(0.65, 0.8), uniform(0.15, 0.35)
+            bpy.data.materials["Material.001"].node_tree.nodes["Principled Volume"].inputs[0].default_value = (c.r, c.g, c.b, 1)
+
+            for j, lt in enumerate(list(bpy.data.collections['lights'].objects)):
+                lt.location.x = init_lights[j].location.x
+                lt.location.y = init_lights[j].location.y
+                lt.data.energy = medium_light
+                lt.rotation_euler[2] = init_lights[j].rotation_euler[2]
+
+        else:
+            for light in list(bpy.data.collections['lights'].objects):
+                # relocate and change power of light
+                light.location.x = uniform(low_x, high_x)
+                light.location.y = uniform(low_y, high_y)
+                light.data.energy = uniform(medium_light - 0.25 * medium_light, medium_light + 0.75 * medium_light)
+                light.rotation_euler[2] = randint(0, 360) / 180 * math.pi
+                
+                bpy.data.materials["Material.001"].node_tree.nodes["Principled Volume"].inputs[2].default_value = 0.05
             
         
         # get grid for objects
@@ -156,10 +184,28 @@ with open(geometry_file_path, "r+") as file:
             # check how much objects in camera
             if len(objects_in_camera) < 3:
                 continue
+
+            visible_obj = []
+            if MIST:
+                # check visibility
+                visible = 0
+                for object in objects_in_camera:
+                    temp = sc.transform(np.array([density, l2(object)]).reshape(1, -1))
+                    
+                    if model.predict(temp)[0] == 1:
+                        visible += 1
+                        visible_obj.append(object)
+
+                if visible < 2:
+                    continue
+                
+            else:
+                visible_obj = objects_in_camera
+
             
             # checking invalid bboxes
-            for object in objects_in_camera:
-                
+            for object in visible_obj:
+
                 # get bbox of object
                 b = camera_view_bounds_2d(bpy.context.scene, bpy.context.scene.camera, bpy.data.objects[object.name])
             
